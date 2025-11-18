@@ -2,4 +2,6 @@ Django
 gunicorn
 psycopg2-binary
 whitenoise
+
 django-environ
+django-extensions
