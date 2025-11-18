@@ -1,0 +1,224 @@
+/* ======= ESTRUCTURA GENERAL ======= */
+body {
+  background-color: #fafaff;
+  color: #222;
+  font-family: "Inter", sans-serif;
+}
+
+/* ======= TÍTULOS ======= */
+.sectionTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #3d2db5;
+  margin-bottom: 0.2em;
+}
+
+.hint {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.divider {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(to right, #7b5bff, transparent);
+  margin: 1.2rem 0;
+}
+
+/* ======= TABLAS ======= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+th {
+  background-color: #7b5bff;
+  color: white;
+  text-align: left;
+  padding: 12px 15px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+tr:hover {
+  background-color: #f6f4ff;
+  transition: 0.3s;
+}
+
+/* ======= BOTONES ======= */
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  background: #7b5bff;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: #5c40e0;
+  transform: scale(1.03);
+}
+
+.btn.primary {
+  background: #7b5bff;
+}
+
+.btn.danger {
+  background: #e94d4d;
+}
+
+/* ======= INFORMACIÓN DE ALUMNO ======= */
+.info-grid {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.info-grid p {
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* ======= ANOTACIONES ======= */
+.notes-list {
+  list-style: none;
+  padding: 0;
+}
+
+.note {
+  background: #ffffff;
+  border-left: 5px solid #7b5bff;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.note .date {
+  display: block;
+  font-size: 0.85rem;
+  color: #7b5bff;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.note p {
+  margin: 5px 0;
+  line-height: 1.4;
+  color: #333;
+}
+
+.note .profesor {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* ======= FORMULARIO ======= */
+form {
+  margin-top: 1.5rem;
+}
+
+textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+textarea:focus {
+  border-color: #7b5bff;
+  outline: none;
+  box-shadow: 0 0 4px rgba(123, 91, 255, 0.3);
+}
+
+button {
+  background-color: #7b5bff;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  margin-top: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background-color: #5c40e0;
+  transform: scale(1.03);
+}
+
+/* ============================
+   GRÁFICO DE ASISTENCIA
+   ============================ */
+
+.asistencia-chart {
+    margin-top: 15px;
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+}
+
+.asistencia-chart .fila {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    gap: 12px;
+}
+
+.asistencia-chart .label {
+    width: 100px;
+    font-weight: 600;
+    color: #333;
+}
+
+.asistencia-chart .barra {
+    flex: 1;
+    background: #f2f2f4;
+    height: 14px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.asistencia-chart .fill {
+    height: 100%;
+    width: 0;
+    border-radius: 10px;
+    transition: width 0.8s ease;
+}
+
+/* Colores */
+.fill.presente { background: #16a34a; }
+.fill.ausente { background: #dc2626; }
+.fill.atraso { background: #ca8a04; }
+.fill.justificado { background: #3b82f6; }
+
+.asistencia-chart .num {
+    width: 40px;
+    text-align: right;
+    font-weight: bold;
+    color: #000;
+}

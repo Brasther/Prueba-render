@@ -1,0 +1,159 @@
+/* ==========================
+   SWITCH / BOTONES DE PÁGINA
+   ========================== */
+.page-switch {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.page-btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: #f3f4f6;
+  text-decoration: none;
+  color: #111827;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.page-btn:hover { background: #e5e7eb; }
+.page-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+/* ==========================
+   TARJETAS HISTÓRICO
+   ========================== */
+.asistencia-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background: #ffffff;
+}
+.asistencia-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: .5rem;
+}
+.asistencia-tabla th,
+.asistencia-tabla td {
+  border: 1px solid #e5e7eb;
+  padding: 6px 10px;
+}
+
+/* ==========================
+   TEMA CLARO PROFESIONAL
+   ========================== */
+.main {
+  background:#ffffff;
+  color:#0f172a;
+}
+.main h1,
+.main h2,
+.main h3 {
+  color:#111827;
+}
+.main .sectionTitle { color:#111827; }
+.main .hint { color:#64748b; }
+.main .divider { background:#e5e7eb; }
+
+/* ==========================
+   INPUT DATE (TOPBAR)
+   ========================== */
+.main input[type="date"].search {
+  max-width:260px;
+  background:#f1f5f9;
+  border:1.5px solid #d7dcef;
+  color:#0f172a;
+  padding:.6rem .75rem;
+  border-radius:10px;
+  outline:0;
+  transition:border .2s, box-shadow .2s, background .2s;
+  background-image:none;
+}
+.main input[type="date"].search:focus {
+  background:#ffffff;
+  border-color:#a78bfa;
+  box-shadow:0 0 0 3px rgba(168,85,247,.25), 0 6px 16px rgba(124,58,237,.10);
+}
+
+/* ==========================
+   TABLA PRINCIPAL DE ASISTENCIA
+   ========================== */
+.main table {
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  background:#ffffff;
+  border:2px solid #cbd3f0;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 8px 22px rgba(2,6,23,.08);
+  margin-top:10px;
+}
+
+/* Encabezado sticky */
+.main thead th {
+  position:sticky;
+  top:0;
+  z-index:2;
+  background:#eef2ff;
+  color:#0f172a;
+  text-align:left;
+  padding:14px 12px;
+  border-bottom:2px solid #c1c9ec;
+  font-weight:700;
+  letter-spacing:.2px;
+}
+
+/* Celdas */
+.main tbody td {
+  padding:14px 12px;
+  border-bottom:1.5px solid #e1e6f6;
+  color:#0f172a;
+}
+
+/* Líneas verticales */
+.main thead th + th,
+.main tbody td + td {
+  border-left:1px solid #e1e6f6;
+}
+
+/* Zebra */
+.main tbody tr:nth-child(odd) {
+  background:#fbfbff;
+}
+
+/* Hover con acento */
+.main tbody tr:hover {
+  background:#f2f6ff;
+  box-shadow: inset 3px 0 0 0 #7c3aed;
+}
+
+/* Padding especial */
+.main tbody td:first-child,
+.main thead th:first-child { padding-left:16px; }
+
+.main tbody td:last-child,
+.main thead th:last-child { padding-right:16px; }
+
+/* ==========================
+   SELECTS (ESTADO)
+   ========================== */
+.main td select {
+  min-width:180px;
+  background:#f8fafc;
+  border:1.5px solid #bfc4d4;
+  color:#0f172a;
+  padding:.5rem .65rem;
+  border-radius:10px;
+  outline:0;
+  transition:border .2s, box-shadow .2s, background .2s;
+}
+.main td select:focus {
+  background:#ffffff;
+  border-color:#a78bfa;
+  box-shadow:0 0 0 3px rgba(168,85,247,.25);
+}

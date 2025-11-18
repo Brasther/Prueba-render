@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Historial de Acciones{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/historial_acciones.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="hist-container">
+
+  <!-- Header -->
+  <div class="hist-header">
+    <h1>Historial de acciones</h1>
+    <form method="post" action="{% url 'usuarios:eliminar_todos_logs' %}"
+          onsubmit="return confirm('¿Seguro que deseas eliminar todo el historial?')">
+      {% csrf_token %}
+      <button type="submit" class="btn-danger">Eliminar todo</button>
+    </form>
+  </div>
+
+  <!-- Filtros -->
+  <form method="get" class="hist-filters">
+    <select name="usuario" class="hist-select">
+      <option value="">Todos los usuarios</option>
+      {% for u in usuarios %}
+        <option value="{{ u.id }}" {% if u.id == usuario_filtrado %}selected{% endif %}>
+          {{ u.get_full_name|default:u.username }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <select name="accion" class="hist-select">
+      <option value="">Todas las acciones</option>
+      <option value="1" {% if accion_filtrada == '1' %}selected{% endif %}>Creación</option>
+      <option value="2" {% if accion_filtrada == '2' %}selected{% endif %}>Edición</option>
+      <option value="3" {% if accion_filtrada == '3' %}selected{% endif %}>Eliminación</option>
+    </select>
+
+    <select name="modelo" class="hist-select">
+      <option value="">Todos los modelos</option>
+      {% for m in modelos %}
+        <option value="{{ m }}" {% if m == modelo_filtrado %}selected{% endif %}>{{ m|capfirst }}</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit" class="btn-primary">Filtrar</button>
+    <a href="{% url 'usuarios:historial_admin' %}" class="btn-secondary">Limpiar</a>
+    <a href="?pdf=1" class="btn-blue">Exportar PDF</a>
+  </form>
+
+  <!-- Tabla -->
+  <div class="hist-table-wrap">
+    <table class="hist-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Usuario</th>
+          <th>Acción</th>
+          <th>Modelo</th>
+          <th>Objeto</th>
+          <th>Detalle</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in logs %}
+        <tr class="
+          {% if log.action_flag == 1 %}bg-creacion
+          {% elif log.action_flag == 2 %}bg-edicion
+          {% elif log.action_flag == 3 %}bg-eliminacion
+          {% endif %}
+        ">
+          <td>{{ log.action_time|date:"d/m/Y H:i" }}</td>
+          <td>{{ log.user.get_full_name|default:log.user.username }}</td>
+          <td>
+            {% if log.action_flag == 1 %}
+              <span class="tag tag-green">Creación</span>
+            {% elif log.action_flag == 2 %}
+              <span class="tag tag-blue">Edición</span>
+            {% elif log.action_flag == 3 %}
+              <span class="tag tag-red">Eliminación</span>
+            {% else %}
+              <span class="tag">Otro</span>
+            {% endif %}
+          </td>
+          <td>{{ log.content_type.model|capfirst }}</td>
+          <td>{{ log.object_repr }}</td>
+          <td class="muted">{{ log.change_message|default:"—" }}</td>
+          <td class="center">
+            <form method="post" action="{% url 'usuarios:eliminar_log' log.id %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn-delete" title="Eliminar registro"
+                      onclick="return confirm('¿Seguro que deseas eliminar este registro del historial?')">×</button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" class="empty">No hay registros disponibles.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</main>
+{% endblock %}

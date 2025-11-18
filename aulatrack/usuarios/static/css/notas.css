@@ -1,0 +1,130 @@
+.sectionTitle {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #1e1e2f;
+  margin-bottom: 4px;
+}
+
+.hint {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.divider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #7c3aed, #c084fc);
+  border-radius: 8px;
+  margin-bottom: 1.2rem;
+}
+
+/* Tabla principal */
+.grades-scroll {
+  overflow-x: auto;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.06);
+}
+
+.grades-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.grades-table th {
+  background: #f8fafc;
+  color: #374151;
+  font-weight: 700;
+  padding: 10px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.grades-table td {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 8px;
+  vertical-align: middle;
+}
+
+.grades-table tr:hover {
+  background: #f9fafb;
+}
+
+/* Inputs */
+.nota-input {
+  width: 60px;
+  padding: 4px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 600;
+  color: #111827;
+  background: #f9fafb;
+  transition: 0.2s;
+}
+
+.nota-input:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+  outline: none;
+}
+
+.nota-input.low {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.nota-input.high {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.nota-input[readonly] {
+  background: #f3f4f6;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+/* Promedio */
+.promedio {
+  font-weight: 700;
+}
+.promedio.ok {
+  color: #16a34a;
+}
+.promedio.bad {
+  color: #dc2626;
+}
+
+/* Botón guardar */
+.save-container {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+.save-btn {
+  background: linear-gradient(90deg, #7c3aed, #6d28d9);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+}
+
+/* Mensajes */
+.msg.success {
+  background: #dcfce7;
+  color: #065f46;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}

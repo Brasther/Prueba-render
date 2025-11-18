@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Asignar profesor jefe{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/asignar_profesor_jefe.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h1>QUITAR PROFES REPETIDOS</h1>
+  <h1>Asignar profesor jefe</h1>
+
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li class="msg {{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <form method="post" class="form">
+    {% csrf_token %}
+    <div class="form-row">
+      <label for="{{ form.curso.id_for_label }}">Curso</label>
+      {{ form.curso }}
+    </div>
+    <br>
+    <div class="form-row">
+      <label for="{{ form.docente.id_for_label }}">Docente</label>
+      {{ form.docente }}
+    </div>
+    <br>
+
+    <div class="actions">
+      <button type="submit" class="btn-primary">Asignar</button>
+      <a href="{% url 'usuarios:cursos_lista' %}" class="btn-secondary">Volver</a>
+    </div>
+  </form>
+</div>
+
+<hr class="divider">
+
+<div class="card large">
+  <h2>Cursos y profesor jefe actual</h2>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Año</th>
+          <th>Nombre</th>
+          <th>Sala</th>
+          <th>Profesor jefe</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in cursos %}
+          <tr>
+            <td>{{ c.año }}</td>
+            <td>{{ c.nombre }}</td>
+            <td>{{ c.sala }}</td>
+            <td>{{ c.profesor_jefe.username|default:"—" }}</td>
+            <td><a href="{% url 'usuarios:asignar_profesor_jefe' %}?curso={{ c.id }}" class="chip">Editar</a></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">No hay cursos registrados.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

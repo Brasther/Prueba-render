@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static dict_extras %}
+{% block title %}AulaTrack - Asistencia{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/asistencia.css' %}">
+{% endblock %}
+
+{% block topbar %}
+  {% if page == '1' %}
+    <button form="form-asistencia" class="topCta" type="submit">Guardar asistencia</button>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<h2 class="sectionTitle">Asistencia - {{ curso.nombre }}</h2>
+<p class="hint">Registro de asistencia de alumnos
+{% if fecha_filtrada %} · Fecha: {{ fecha_filtrada }}{% endif %}
+</p>
+
+<!-- NAV -->
+<div class="page-switch">
+  <a href="?page=1{% if fecha_filtrada %}&fecha={{ fecha_filtrada }}{% endif %}"
+     class="page-btn {% if page == '1' %}active{% endif %}">Registrar asistencia</a>
+
+  <a href="?page=2" class="page-btn {% if page == '2' %}active{% endif %}">Ver histórico</a>
+</div>
+<div class="divider"></div>
+
+{% if page == '1' %}
+<form method="POST" id="form-asistencia">
+  {% csrf_token %}
+
+  <!-- FECHA PARA EDITAR -->
+  <input type="hidden" name="fecha" value="{{ fecha_filtrada }}">
+
+  <table>
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Alumno</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for alumno in alumnos %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ alumno.nombres }} {{ alumno.apellidos }}</td>
+        <td>
+          <label>
+            <input type="radio" name="estado_{{ alumno.id }}" value="presente"
+              {% if estados|get_item:alumno.id == "presente" %}checked{% endif %}>
+            Presente
+          </label>
+
+          <label>
+            <input type="radio" name="estado_{{ alumno.id }}" value="ausente"
+              {% if estados|get_item:alumno.id == "ausente" %}checked{% endif %}>
+            Ausente
+          </label>
+
+          <label>
+            <input type="radio" name="estado_{{ alumno.id }}" value="justificado"
+              {% if estados|get_item:alumno.id == "justificado" %}checked{% endif %}>
+            Justificado
+          </label>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="3">No hay alumnos registrados</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load static dict_extras %}
+{% load static %}
+
+{% block title %}Registro de Notas - AulaTrack{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/notas.css' %}">
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="msg {{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+<h2 class="sectionTitle">{{ asignatura.nombre }} - {{ curso.año }} {{ curso.nombre }}</h2>
+<p class="hint">
+  Registro de notas del curso. 
+  {% if puede_editar %}
+    Puedes editar las notas.
+  {% else %}
+    Solo lectura.
+  {% endif %}
+</p>
+<div class="divider"></div>
+
+<form method="post">
+  {% csrf_token %}
+  <div class="grades-scroll">
+    <table class="grades-table">
+      <thead>
+        <tr>
+          <th>Alumno</th>
+          {% for i in columnas_notas %}
+            <th>Nota {{ i }}</th>
+          {% endfor %}
+          <th>Promedio</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for alumno, data in notas_por_alumno.items %}
+          <tr>
+            <td style="text-align:left; font-weight:600;">
+              {{ alumno.apellidos }} {{ alumno.nombres }}
+            </td>
+
+            {% for i in columnas_notas %}
+              {% with nota=data.notas|index:i %}
+                <td>
+                  <input type="text"
+                         lang="en"
+                         inputmode="decimal"
+                         name="nota_{{ alumno.id }}_{{ i }}"
+                         {% if nota and nota.valor is not None %}
+                           value="{{ nota.valor|floatformat:1 }}"
+                         {% endif %}
+                         {% if not puede_editar %}readonly{% endif %}
+                         class="nota-input {% if nota and nota.valor < 4 %}low{% elif nota and nota.valor >= 4 %}high{% endif %}">
+                </td>
+              {% endwith %}
+            {% endfor %}
+
+            <td class="promedio {% if data.promedio and data.promedio < 4 %}bad{% elif data.promedio %}ok{% endif %}">
+              {% if data.promedio %}
+                {{ data.promedio|floatformat:1 }}
+              {% else %}
+                -
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% if puede_editar %}
+  <div class="save-container">
+    <button type="submit" class="save-btn">Guardar Notas</button>
+  </div>
+  {% endif %}
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const inputs = document.querySelectorAll('.nota-input');
+
+  // === Colorear según valor ===
+  const actualizarColor = (input) => {
+    input.classList.remove('low', 'high');
+    const val = parseFloat(input.value.replace(',', '.'));
+    if (!isNaN(val)) {
+      if (val < 4) input.classList.add('low');
+      else input.classList.add('high');
+    }
+  };
+
+  // === Recalcular promedio ===
+  const recalcularPromedio = (fila) => {
+    const celdas = fila.querySelectorAll('.nota-input:not([readonly])');
+    let sum = 0, count = 0;
+    celdas.forEach(inp => {
+      const v = parseFloat(inp.value.replace(',', '.'));
+      if (!isNaN(v)) { sum += v; count++; }
+    });
+    const prom = count ? (sum / count).toFixed(1) : '-';
+    const promCell = fila.querySelector('.promedio');
+    promCell.textContent = prom;
+    promCell.classList.remove('ok', 'bad');
+    if (prom !== '-' && prom < 4) promCell.classList.add('bad');
+    else if (prom !== '-') promCell.classList.add('ok');
+  };
+
+  // === Inicializar ===
+  document.querySelectorAll('.grades-table tbody tr').forEach(fila => {
+    fila.querySelectorAll('.nota-input').forEach(input => {
+      if (input.value.includes(',')) input.value = input.value.replace(',', '.');
+      if (input.value && !input.value.includes('.')) input.value += '.0';
+      actualizarColor(input);
+    });
+    recalcularPromedio(fila);
+  });
+
+  // === Entrada en vivo ===
+  inputs.forEach(input => {
+    input.addEventListener('input', e => {
+      e.target.value = e.target.value.replace(',', '.');
+      if (/^\d+\.\d{2,}$/.test(e.target.value)) {
+        e.target.value = parseFloat(e.target.value).toFixed(1);
+      }
+      actualizarColor(e.target);
+      recalcularPromedio(e.target.closest('tr'));
+    });
+
+    input.addEventListener('blur', e => {
+      let val = e.target.value.trim();
+      if (/^\d$/.test(val)) {
+        e.target.value = val + '.0';
+      } else if (/^\d[.,]\d$/.test(val)) {
+        e.target.value = val.replace(',', '.');
+      }
+      if (/^\d+\.\d{2,}$/.test(e.target.value)) {
+        e.target.value = parseFloat(e.target.value).toFixed(1);
+      }
+    });
+  });
+});
+</script>
+{% endblock %}
