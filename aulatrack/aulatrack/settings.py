@@ -39,6 +39,14 @@ INSTALLED_APPS = [
 ]
 
 
+ALLOWED_HOSTS = [
+    'prueba-render-0fd9.onrender.com',
+    '.onrender.com',  # permite cualquier subdominio de Render
+    'localhost',
+    '127.0.0.1',
+]
+
+
 # ============================
 # MODELO DE USUARIO PERSONALIZADO
 # ============================
